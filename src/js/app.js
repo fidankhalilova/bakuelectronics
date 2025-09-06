@@ -40,6 +40,7 @@ function fetchProducts(url, cb) {
 
 let ProductFetchHTMLData = document.querySelector('#productsSection');
 let ProductDataFetchHTMLData = document.querySelector('#productsDataSection-c');
+let ProductCartFetchHTMLData = document.querySelector('#addToCart-c');
 
 const renderProductsHTML = (products) => {
     products.forEach((product) => {
@@ -104,14 +105,36 @@ const renderDataProductsHTML = (products) => {
         const productDataHtml = `<tr>
                             <td class="px-6 py-4 whitespace-nowrap">${product?.title ?? "No Name"}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${Math.round(product?.discounted * 100) / 100 ?? "None"}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${Math.round((product?.discounted / 18) * 100) / 100 ?? "None"}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button
-                                    class="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out" onclick="deleteItem(this)">Delete</button>
+                                    class="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out" onclick="deleteItem(${product.id}, this)">Delete</button>
                             </td>
                         </tr>`
         ProductDataFetchHTMLData.innerHTML += productDataHtml;
+    });
+};
+
+const renderCartProductsHTML = (products) => {
+    products.forEach((product) => {
+        const productCartHtml = `<tr>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span class="font-semibold">${product?.title ?? "No Name"}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                            <span class="text-center w-10">1</span>
+                                            <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
+                                </tr>`
+        ProductCartFetchHTMLData.innerHTML += productCartHtml;
     });
 };
 
@@ -124,16 +147,28 @@ fetchProducts("products", (data) => {
     renderDataProductsHTML(data);
     console.log(data);
 });
+fetchProducts("products", (data) => {
+    renderCartProductsHTML(data);
+    console.log(data);
+});
 
-function deleteItem(e) {
-    console.log("Button element", e);
-    e.parentElement.remove();
+function deleteItem(id, btn) {
+    axios.delete(`${LOCAL_BASE}/products/${products?.id}`)
+        .then(() => {
+            // remove row visually
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            console.log(`Product ${id} deleted successfully`);
+        })
+        .catch(error => {
+            console.error("Failed to delete:", error);
+        });
 }
+
 
 
 const ToTop = document.querySelector("#tothetop");
 document.addEventListener("scroll", () => {
-    console.log(window.scrollY);
     if (window.scrollY > 200) {
         ToTop.style.display = "flex";
     }
