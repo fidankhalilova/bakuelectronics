@@ -1,0 +1,11 @@
+{
+  "products": [
+    {
+      "id": "9a6e",
+      "title": "iphone",
+      "original": "5000",
+      "discounted": "4600"
+    }
+  ],
+  "add-to-cart": []
+}
