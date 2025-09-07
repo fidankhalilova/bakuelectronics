@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="shortcut icon" href="https://img.b-e.az/media/logo/baku-electronics-logo_QJeQcxF.svg"
         type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="../src/css/output.css">
     <title>My cart - Baku Electronics</title>
 </head>
@@ -59,49 +60,58 @@
         </nav>
     </header>
     <main class="container px-20 mx-auto">
-        <div>
-            <div>
-                <h1>Səbətim</h1>
-                <div id="product-line" class="flex flex-row items-center justify-between">
-                    <div id="productImg" class="relative z-10 top-56">
+        <div class="mt-10 flex flex-row justify-start gap-6">
+            <div class="rounded-xl p-10 shadow-[0px_4px_10px_0px_rgba(0,_0,_0,_0.1)] w-3/4">
+                <h1 class="text-[40px] font-semibold">Səbətim</h1>
+                <div id="product-line" class="flex flex-col mt-[-120px]">
+                    <div id="productImg" class="relative z-10 top-35 left-8">
                         <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
-                            alt="" class="w-[100px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
+                            alt="" class="w-[160px] object-cover relative z-3 rounded-2xl border border-[#e1e1e1]">
                     </div>
                     <div id="productContext"
-                        class="bg-[#f5f5f5] w-[800px] h-[300px] rounded-2xl flex flex-col items-center justify-start">
-                        <div class="relative mt-60 w-[250px] gap-3">
-                            <div id="productLikesComments" class="flex flex-row gap-3">
-                                <div id="likes" class="flex flex-row gap-1">
-                                    <i class="ri-star-fill text-[14px] text-[#EA2427]"></i>
-                                    <p class="text-[14px]">0</p>
-                                </div>
-                                <div id="comments" class="flex flex-row gap-1">
-                                    <i class="ri-chat-3-line text-[14px] text-[#EA2427]"></i>
-                                    <p class="text-[14px]">0 rəy</p>
+                        class="bg-[#f5f5f5] w-[800px] h-[160px] rounded-2xl flex flex-row items-center justify-start">
+                        <div class="relative ml-14 gap-2 flex flex-row">
+                            <div id="productName" class="flex flex-col ml-40 gap-3">
+                                <h3 class="text-[16px] w-[300px]">Smartfon Apple iPhone 16 PRO 128GB NATURAL TITANIUM
+                                </h3>
+                                <div id="discountedPrice" class="">
+                                    <p class="text-[12px] text-[#787a7d] font-semibold line-through">2899.00₼</p>
+                                    <p class="text-[14px] text-[#333] font-semibold">2649.00₼</p>
                                 </div>
                             </div>
-                            <div id="productName">
-                                <h3 class="text-[16px] mt-1">Smartfon Apple iPhone 16 PRO 128GB NATURAL TITANIUM</h3>
-                            </div>
-                            <div id="productPriceCredit" class="flex flex-row gap-2 mt-5">
-                                <div id="discountedPrice">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">2899.00₼</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">2649.00₼</p>
+                            <div id="addtocartButtons" class="flex flex-row justify-between ml-20 gap-2 mt-5">
+                                <div
+                                    class="text-[20px] h-14 w-25 flex justify-center gap-4 px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] items-center duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5]">
+                                    <button class="font-bold">-</button>
+                                    <span class="text-lg">1</span>
+                                    <button class="">+</button>
                                 </div>
-                                <div id="creditPrice" class="ml-4 pl-6 border-l border-l-[#787a7d]">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold">18 ay</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">161.11₼</p>
-                                </div>
-                            </div>
-                            <div id="addtocartButtons" class="flex flex-row justify-between mt-3">
                                 <i
-                                    class="ri-delete-bin-6-line text-[20px] px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] items-center duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5]"></i>
+                                    class="ri-delete-bin-6-line text-[20px] h-14 px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] items-center duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5]"></i>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="checkout-btn"
+                    class="bg-black text-white font-medium p-4 rounded-xl w-50 flex items-center justify-center mt-5">
+                    Sifarişi rəsmiləşdir
+                </div>
             </div>
-            <div></div>
+            <div class="rounded-xl p-10 shadow-[0px_4px_10px_0px_rgba(0,_0,_0,_0.1)] w-1/4 relative">
+                <h1 class="text-[20px] font-semibold pb-5 border-b border-b-gray-200">Ümumi Baxış</h1>
+                <div id="productName" class="flex flex-row pt-3">
+                    <h3 class="text-[11px] w-[250px]">Smartfon Apple iPhone 16 PRO 128GB NATURAL TITANIUM
+                    </h3>
+                    <div id="discountedPrice" class="ml-20">
+                        <p class="text-[12px] text-[#787a7d] font-semibold line-through">2899.00₼</p>
+                        <p class="text-[16px] text-[#333] font-semibold">2649.00₼</p>
+                    </div>
+                </div>
+                <div id="totalPrice" class="absolute bottom-5 left-5">
+                    <p class="text-[16px] text-[#787a7d] font-semibold">Total Price:</p>
+                    <p class="text-[20px] text-[#333] font-semibold">2649.00₼</p>
+                </div>
+            </div>
         </div>
     </main>
 
