@@ -1,49 +1,51 @@
 let LOCAL_BASE = "http://localhost:3000";
 
-let products = document.querySelector('#products');
+let products = document.querySelector("#products");
 
-products && products.addEventListener('submit', handleSubmit);
+products && products.addEventListener("submit", handleSubmit);
 
 function handleSubmit(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    let form = event.target;
-    let formData = new FormData(form);
-    let data = Object.fromEntries(formData);
+  let form = event.target;
+  let formData = new FormData(form);
+  let data = Object.fromEntries(formData);
 
-    let endpoint = form.id = "products";
+  let endpoint = (form.id = "products");
 
-    axios.post(`${LOCAL_BASE}/${endpoint}`, data)
-        .then(response => {
-            console.log("Saved:", response.data);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
-        .finally(() => {
-            console.log("Fetch completed!");
-        });
+  axios
+    .post(`${LOCAL_BASE}/${endpoint}`, data)
+    .then((response) => {
+      console.log("Saved:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    })
+    .finally(() => {
+      console.log("Fetch completed!");
+    });
 }
 
 function fetchProducts(url, cb) {
-    axios.get(`${LOCAL_BASE}/${url}`)
-        .then((response) => {
-            cb(response.data);
-        })
-        .catch((error) => {
-            console.error(error);
-        })
-        .finally(() => {
-            console.log("FETCH COMPLETED!");
-        });
+  axios
+    .get(`${LOCAL_BASE}/${url}`)
+    .then((response) => {
+      cb(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      console.log("FETCH COMPLETED!");
+    });
 }
 
-let ProductFetchHTMLData = document.querySelector('#productsSection');
-let ProductCartFetchHTMLData = document.querySelector('#addToCart-c');
+let ProductFetchHTMLData = document.querySelector("#productsSection");
+let ProductCartFetchHTMLData = document.querySelector("#addToCart-c");
 
 const renderProductsHTML = (products) => {
-    products.forEach((product) => {
-        const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
+  products.forEach((product) => {
+    const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
                     <div id="productImg" class="relative z-10 top-56">
                         <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
                             alt="" class="w-[250px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
@@ -71,16 +73,28 @@ const renderProductsHTML = (products) => {
                                 </div>
                             </div>
                             <div id="productName">
-                                <h3 class="text-[16px] mt-1">${product?.title ?? "No Name"}</h3>
+                                <h3 class="text-[16px] mt-1">${
+                                  product?.title ?? "No Name"
+                                }</h3>
                             </div>
                             <div id="productPriceCredit" class="flex flex-row gap-2 mt-5">
                                 <div id="discountedPrice">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">${Math.round(product?.original * 100) / 100 ?? "None"}₼</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round(product?.original * 100) / 100 ?? "None"}₼</p>
+                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">${
+                                      Math.round(product?.original * 100) /
+                                        100 ?? "None"
+                                    }₼</p>
+                                    <p class="text-[18px] text-[#333] font-semibold">${
+                                      Math.round(product?.original * 100) /
+                                        100 ?? "None"
+                                    }₼</p>
                                 </div>
                                 <div id="creditPrice" class="ml-4 pl-6 border-l border-l-[#787a7d]">
                                     <p class="text-[14px] text-[#787a7d] font-semibold">18 ay</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round((product?.discounted / 18) * 100) / 100 ?? "None"}₼</p>
+                                    <p class="text-[18px] text-[#333] font-semibold">${
+                                      Math.round(
+                                        (product?.discounted / 18) * 100
+                                      ) / 100 ?? "None"
+                                    }₼</p>
                                 </div>
                             </div>
                             <div id="addtocartButtons" class="flex flex-row justify-between mt-3">
@@ -94,20 +108,25 @@ const renderProductsHTML = (products) => {
                             </div>
                         </div>
                     </div>
-                </div>`
-        ProductFetchHTMLData.innerHTML += productHtml;
-    });
+                </div>`;
+    ProductCartFetchHTMLData && (ProductFetchHTMLData.innerHTML += productHtml);
+  });
 };
 
 const renderCartProductsHTML = (products) => {
-    products.forEach((product) => {
-        const productCartHtml = `<tr>
+  products.forEach((product) => {
+    const productCartHtml = `<tr>
                                     <td class="py-4">
                                         <div class="flex items-center">
-                                            <span class="font-semibold">${product?.title ?? "No Name"}</span>
+                                            <span class="font-semibold">${
+                                              product?.title ?? "No Name"
+                                            }</span>
                                         </div>
                                     </td>
-                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
+                                    <td class="py-4">${
+                                      Math.round(product?.original * 100) /
+                                        100 ?? "None"
+                                    }</td>
                                     <td class="py-4">
                                         <div class="flex items-center">
                                             <button class="border rounded-md py-2 px-4 mr-2">-</button>
@@ -115,31 +134,34 @@ const renderCartProductsHTML = (products) => {
                                             <button class="border rounded-md py-2 px-4 ml-2">+</button>
                                         </div>
                                     </td>
-                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
-                                </tr>`
-        ProductCartFetchHTMLData.innerHTML += productCartHtml;
-    });
+                                    <td class="py-4">${
+                                      Math.round(product?.original * 100) /
+                                        100 ?? "None"
+                                    }</td>
+                                </tr>`;
+    ProductCartFetchHTMLData.innerHTML += productCartHtml;
+  });
 };
 
 fetchProducts("products", (data) => {
-    renderProductsHTML(data);
-    console.log(data);
+  renderProductsHTML(data);
+  console.log(data);
 });
 fetchProducts("products", (data) => {
-    renderCartProductsHTML(data);
-    console.log(data);
+  renderCartProductsHTML(data);
+  console.log(data);
 });
 
 function deleteItem(id, btn) {
-    axios.delete(`${LOCAL_BASE}/products/${products?.id}`)
-        .then(() => {
-            const row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-            console.log(`Product ${id} deleted successfully`);
-        })
-        .catch(error => {
-            console.error("Failed to delete:", error);
-        });
+  axios
+    .delete(`${LOCAL_BASE}/products/${products?.id}`)
+    .then(() => {
+      const row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    })
+    .catch((error) => {
+      console.error("Failed to delete:", error);
+    });
 }
 
 const CartItemsDataHTML = document.querySelector("#addedProds");
@@ -147,17 +169,16 @@ const CartItemsDataHTML = document.querySelector("#addedProds");
 var cartItems = [];
 
 const addToCartProducts = (data) => {
-    const existingCartItems = cartItems.find((item) => item.id === data.id);
-    console.log(existingCartItems);
-    if (existingCartItems) {
-        cartItems = cartItems.map((item) =>
-            item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-    }
-    else {
-        cartItems.push({ ...item, quantity: 1 })
-    }
-}
+  const existingCartItems = cartItems.find((item) => item.id === data.id);
+  console.log(existingCartItems);
+  if (existingCartItems) {
+    cartItems = cartItems.map((item) =>
+      item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+  } else {
+    cartItems.push({ ...item, quantity: 1 });
+  }
+};
 
 const minusBtn = document.getElementById("subtraction");
 const plusBtn = document.getElementById("addition");
@@ -166,21 +187,21 @@ const quantitySpan = document.getElementById("how_many");
 let quantity = 1;
 
 function updateQuantity() {
-    quantitySpan.innerHTML = quantity;
+  quantitySpan.innerHTML = quantity;
 }
 
 // decrease quantity (not less than 1)
 minusBtn.addEventListener("click", () => {
-    if (quantity > 1) {
-        quantity--;
-        updateQuantity();
-    }
-    console.log(quantity);
+  if (quantity > 1) {
+    quantity--;
+    updateQuantity();
+  }
+  console.log(quantity);
 });
 
 // increase quantity
 plusBtn.addEventListener("click", () => {
-    quantity++;
-    updateQuantity();
-    console.log(quantity);
+  quantity++;
+  updateQuantity();
+  console.log(quantity);
 });
