@@ -37,22 +37,24 @@
             class="flex flex-col gap-5 justify-center items-center mt-56 rounded-xl shadow-[0px_4px_10px_0px_rgba(0,_0,_0,_0.1)] w-[400px] ml-55">
             <h1 class="font-bold text-[30px] w-200 text-center mt-10">Daxil Ol
             </h1>
-            <div class="px-3 py-2 rounded-2xl w-80 border flex flex-row justify-between items-center">
-                <input type="text" placeholder="E-poçt"
-                    class="outline-none placeholder:text-[#dadada] placeholder:text-[14px]">
-                <i class="ri-mail-line text-[#EA2427]"></i>
-            </div>
-            <div class="px-3 py-2 rounded-2xl w-80 border flex flex-row justify-between items-center">
-                <input type="text" placeholder="Şifrə"
-                    class="outline-none placeholder:text-[#dadada] placeholder:text-[14px]">
-                <i class="ri-eye-line text-[#EA2427]"></i>
-            </div>
+            <form id="loginForm" class="flex flex-col gap-5">
+                <div class="px-3 py-2 rounded-2xl w-80 border flex flex-row justify-between items-center">
+                    <input type="text" placeholder="E-poçt" id="username"
+                        class="outline-none placeholder:text-[#dadada] placeholder:text-[14px]">
+                    <i class="ri-mail-line text-[#EA2427]"></i>
+                </div>
+                <div class="px-3 py-2 rounded-2xl w-80 border flex flex-row justify-between items-center">
+                    <input type="text" placeholder="Şifrə" id="password"
+                        class="outline-none placeholder:text-[#dadada] placeholder:text-[14px]">
+                    <i class="ri-eye-line text-[#EA2427]"></i>
+                </div>
 
-            <div class="text-right underline text-[12px] text-black font-semibold w-80">Şifrəni unutmusan?</div>
+                <div class="text-right underline text-[12px] text-black font-semibold w-80">Şifrəni unutmusan?</div>
 
-            <button
-                class="px-3 py-2 rounded-2xl w-80 bg-black text-white text-[14px] font-semibold flex items-center justify-center hover:bg-[#2a2a2a]">Daxil
-                ol</button>
+                <button
+                    class="px-3 py-2 rounded-2xl w-80 bg-black text-white text-[14px] font-semibold flex items-center justify-center hover:bg-[#2a2a2a]">Daxil
+                    ol</button>
+            </form>
 
             <div class="text-center text-[12px] text-black w-80 mb-10">Hesabınız yoxdur? <a href="#"
                     class="underline font-semibold">Qeydiyyatdan keçin</a></div>
@@ -61,6 +63,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../src/js/app.js"></script>
+    <script src="../src/js/login.js"></script>
 </body>
 
 </html>

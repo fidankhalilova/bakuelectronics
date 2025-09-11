@@ -45,7 +45,7 @@ const renderProductsHTML = (products) => {
     products.forEach((product) => {
         const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
                     <div id="productImg" class="relative z-10 top-56">
-                        <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
+                        <img src="${product?.dropzoneFile ?? "No img"}"
                             alt="" class="w-[250px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
                         <div class="flex flex-row justify-between items-center ">
                             <div id="discount"
@@ -126,53 +126,44 @@ fetchProducts("products", (data) => {
     console.log(data);
 });
 
-
-const ToTop = document.querySelector("#tothetop");
-document.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-        ToTop.style.display = "flex";
-    }
-    else {
-        ToTop.style.display = "none";
-    }
-});
-
-ToTop.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    })
-});
-
-
-const LogOutBtn = document.getElementById("logOut");
-
-LogOutBtn && LogOutBtn.addEventListener("click", () => {
-    console.log("Clicked");
-    localStorage.removeItem("token");
-    window.location.href = "./login.html";
-});
-
-const CartItemsDataHTML = document.querySelector("#addedProds");
-
-var cartItems = [];
-
-const addToCartProducts = (data) => {
-    const existingCartItems = cartItems.find((item) => item.id === data.id);
-    console.log(existingCartItems);
-    if (existingCartItems) {
-        cartItems = cartItems.map((item) =>
-            item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-    }
-    else {
-        cartItems.push({ ...item, quantity: 1 })
-    }
+function deleteItem(id, btn) {
+    axios.delete(`${LOCAL_BASE}/products/${products?.id}`)
+        .then(() => {
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            console.log(`Product ${id} deleted successfully`);
+        })
+        .catch(error => {
+            console.error("Failed to delete:", error);
+        });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(function () {
-        document.getElementById("loader").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-    }, 2000); //
+const fileInput = document.getElementById("dropzone-file");
+const preview = document.getElementById("preview");
+
+fileInput.addEventListener("change", function () {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const base64String = event.target.result;
+        console.log("Base64:", base64String);
+
+        preview.src = base64String;
+
+        fetch("http://localhost:3000/upload", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ image: base64String })
+        })
+            .then(res => res.json())
+            .then(data => console.log("Uploaded:", data))
+            .catch(err => console.error(err));
+    };
+
+    reader.readAsDataURL(file);
 });

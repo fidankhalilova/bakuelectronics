@@ -39,7 +39,7 @@ function fetchProducts(url, cb) {
 }
 
 let ProductFetchHTMLData = document.querySelector('#productsSection');
-let ProductDataFetchHTMLData = document.querySelector('#productsDataSection-c');
+let ProductCartFetchHTMLData = document.querySelector('#addToCart-c');
 
 const renderProductsHTML = (products) => {
     products.forEach((product) => {
@@ -99,59 +99,48 @@ const renderProductsHTML = (products) => {
     });
 };
 
-const renderDataProductsHTML = (products) => {
+const renderCartProductsHTML = (products) => {
     products.forEach((product) => {
-        const productDataHtml = `<tr>
-                            <td class="px-6 py-4 whitespace-nowrap">${product?.title ?? "No Name"}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${Math.round((product?.discounted / 18) * 100) / 100 ?? "None"}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <button
-                                    class="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out" onclick="deleteItem(${product.id}, this)">Delete</button>
-                            </td>
-                        </tr>`
-        ProductDataFetchHTMLData.innerHTML += productDataHtml;
+        const productCartHtml = `<tr>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span class="font-semibold">${product?.title ?? "No Name"}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                            <span class="text-center w-10">1</span>
+                                            <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="py-4">${Math.round(product?.original * 100) / 100 ?? "None"}</td>
+                                </tr>`
+        ProductCartFetchHTMLData.innerHTML += productCartHtml;
     });
 };
-
 
 fetchProducts("products", (data) => {
     renderProductsHTML(data);
     console.log(data);
 });
-
 fetchProducts("products", (data) => {
-    renderDataProductsHTML(data);
+    renderCartProductsHTML(data);
     console.log(data);
 });
 
-
-const ToTop = document.querySelector("#tothetop");
-document.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-        ToTop.style.display = "flex";
-    }
-    else {
-        ToTop.style.display = "none";
-    }
-});
-
-ToTop.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    })
-});
-
-
-const LogOutBtn = document.getElementById("logOut");
-
-LogOutBtn && LogOutBtn.addEventListener("click", () => {
-    console.log("Clicked");
-    localStorage.removeItem("token");
-    window.location.href = "./login.html";
-});
+function deleteItem(id, btn) {
+    axios.delete(`${LOCAL_BASE}/products/${products?.id}`)
+        .then(() => {
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            console.log(`Product ${id} deleted successfully`);
+        })
+        .catch(error => {
+            console.error("Failed to delete:", error);
+        });
+}
 
 const CartItemsDataHTML = document.querySelector("#addedProds");
 
@@ -170,9 +159,28 @@ const addToCartProducts = (data) => {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(function () {
-        document.getElementById("loader").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-    }, 2000); //
+const minusBtn = document.getElementById("subtraction");
+const plusBtn = document.getElementById("addition");
+const quantitySpan = document.getElementById("how_many");
+
+let quantity = 1;
+
+function updateQuantity() {
+    quantitySpan.innerHTML = quantity;
+}
+
+// decrease quantity (not less than 1)
+minusBtn.addEventListener("click", () => {
+    if (quantity > 1) {
+        quantity--;
+        updateQuantity();
+    }
+    console.log(quantity);
+});
+
+// increase quantity
+plusBtn.addEventListener("click", () => {
+    quantity++;
+    updateQuantity();
+    console.log(quantity);
 });
