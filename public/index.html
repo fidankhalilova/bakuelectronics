@@ -15,10 +15,10 @@
 </head>
 
 <body class="container px-20 mx-auto font-inter">
-    <!-- <div id="loader" class="w-full h-full">
+    <div id="loader" class="w-full h-full">
         <i class="ri-loader-line animate-spin text-4xl flex justify-center items-center"></i>
-    </div> -->
-    <div id="content" class=""> <!--Load da islemir oxumur js file-->
+    </div>
+    <div id="content" class="hidden"> <!--Load da islemir oxumur js file-->
         <header class="container px-20 mx-auto">
             <nav id="first-nav" class="bg-[#f5f5f5] text-[#9e9d9ddf] px-3 rounded-4xl">
                 <div class="flex flex-row justify-between items-center p-4">
@@ -179,11 +179,11 @@
                                     </div>
                                 </div>
                                 <div id="addtocartButtons" class="flex flex-row justify-between mt-3">
-                                    <div
+                                    <button
                                         class="text-[16px] px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5] w-[190px] flex items-center justify-center">
                                         <i class="ri-shopping-basket-2-fill text-[18px] mr-2"></i> Səbətə
                                         əlavə et
-                                    </div>
+                                    </button>
                                     <i
                                         class="ri-heart-line text-[20px] px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] items-center duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5]"></i>
                                 </div>
@@ -192,10 +192,10 @@
                     </div>
                 </div>
             </section>
-            <!-- <div class="hidden fixed bottom-5 right-5 z-99 p-10 bg-[#EA2427] text-2xl text-white items-center justify-center w-[50px] h-[50px] rounded-full duration-200 ease-in-out"
-            id="tothetop">
-            <i class="ri-arrow-up-double-line"></i>
-        </div> -->
+            <div class="hidden fixed bottom-7 right-7 z-99 p-10 bg-[#EA2427] text-[40px] text-white items-center justify-center w-[40px] h-[40px] rounded-full duration-200 ease-in-out"
+                id="tothetop">
+                <i class="ri-arrow-up-double-line"></i>
+            </div>
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -209,6 +209,7 @@
     </script>
     <script src="../src/js/protect.js"></script>
     <script src="../src/js/app.js"></script>
+    <script src="../src/js/to_top.js"></script>
 </body>
 
 </html>

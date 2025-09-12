@@ -73,28 +73,24 @@ const renderProductsHTML = (products) => {
                                 </div>
                             </div>
                             <div id="productName">
-                                <h3 class="text-[16px] mt-1">${
-                                  product?.title ?? "No Name"
-                                }</h3>
+                                <h3 class="text-[16px] mt-1">${product?.title ?? "No Name"
+      }</h3>
                             </div>
                             <div id="productPriceCredit" class="flex flex-row gap-2 mt-5">
                                 <div id="discountedPrice">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">${
-                                      Math.round(product?.original * 100) /
-                                        100 ?? "None"
-                                    }₼</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${
-                                      Math.round(product?.original * 100) /
-                                        100 ?? "None"
-                                    }₼</p>
+                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">${Math.round(product?.original * 100) /
+      100 ?? "None"
+      }₼</p>
+                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round(product?.original * 100) /
+      100 ?? "None"
+      }₼</p>
                                 </div>
                                 <div id="creditPrice" class="ml-4 pl-6 border-l border-l-[#787a7d]">
                                     <p class="text-[14px] text-[#787a7d] font-semibold">18 ay</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${
-                                      Math.round(
-                                        (product?.discounted / 18) * 100
-                                      ) / 100 ?? "None"
-                                    }₼</p>
+                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round(
+        (product?.discounted / 18) * 100
+      ) / 100 ?? "None"
+      }₼</p>
                                 </div>
                             </div>
                             <div id="addtocartButtons" class="flex flex-row justify-between mt-3">
@@ -118,15 +114,13 @@ const renderCartProductsHTML = (products) => {
     const productCartHtml = `<tr>
                                     <td class="py-4">
                                         <div class="flex items-center">
-                                            <span class="font-semibold">${
-                                              product?.title ?? "No Name"
-                                            }</span>
+                                            <span class="font-semibold">${product?.title ?? "No Name"
+      }</span>
                                         </div>
                                     </td>
-                                    <td class="py-4">${
-                                      Math.round(product?.original * 100) /
-                                        100 ?? "None"
-                                    }</td>
+                                    <td class="py-4">${Math.round(product?.original * 100) /
+      100 ?? "None"
+      }</td>
                                     <td class="py-4">
                                         <div class="flex items-center">
                                             <button class="border rounded-md py-2 px-4 mr-2">-</button>
@@ -134,10 +128,9 @@ const renderCartProductsHTML = (products) => {
                                             <button class="border rounded-md py-2 px-4 ml-2">+</button>
                                         </div>
                                     </td>
-                                    <td class="py-4">${
-                                      Math.round(product?.original * 100) /
-                                        100 ?? "None"
-                                    }</td>
+                                    <td class="py-4">${Math.round(product?.original * 100) /
+      100 ?? "None"
+      }</td>
                                 </tr>`;
     ProductCartFetchHTMLData.innerHTML += productCartHtml;
   });
@@ -187,11 +180,12 @@ const quantitySpan = document.getElementById("how_many");
 let quantity = 1;
 
 function updateQuantity() {
-  quantitySpan.innerHTML = quantity;
+  quantitySpan.innerHTML = `${quantity}`;
 }
 
 // decrease quantity (not less than 1)
-minusBtn.addEventListener("click", () => {
+minusBtn && minusBtn.addEventListener("click", () => {
+  console.log("clicked -");
   if (quantity > 1) {
     quantity--;
     updateQuantity();
@@ -200,8 +194,16 @@ minusBtn.addEventListener("click", () => {
 });
 
 // increase quantity
-plusBtn.addEventListener("click", () => {
+plusBtn && plusBtn.addEventListener("click", () => {
+  console.log("clicked +");
   quantity++;
   updateQuantity();
   console.log(quantity);
 });
+
+const checkoutBtn = document.querySelector("#checkout-btn");
+
+checkoutBtn && checkoutBtn.addEventListener("click", () => {
+  console.log("clicked");
+  window.location.href = "./checkout.html";
+})

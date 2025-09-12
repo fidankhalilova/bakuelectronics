@@ -16,5 +16,14 @@
     "json-server": "^1.0.0-beta.3",
     "remixicon": "^4.6.0",
     "tailwindcss": "^4.1.12"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fidankhalilova/bakuelectronics.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fidankhalilova/bakuelectronics/issues"
+  },
+  "homepage": "https://github.com/fidankhalilova/bakuelectronics#readme"
 }
