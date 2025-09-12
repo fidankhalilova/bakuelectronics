@@ -1,53 +1,5 @@
 {
   "products": [
-    {
-      "id": "9a6e",
-      "title": "iphone",
-      "original": "5000",
-      "discounted": "4600"
-    },
-    {
-      "id": "edbc",
-      "title": "iphone 14",
-      "original": "5000",
-      "discounted": "4600"
-    },
-    {
-      "id": "c72b",
-      "title": "iphone 14",
-      "original": "5000",
-      "discounted": "4600"
-    },
-    {
-      "id": "cc11",
-      "title": "Kitra Cole",
-      "original": "200",
-      "discounted": "443"
-    },
-    {
-      "id": "80c8",
-      "title": "Curran Holman",
-      "original": "254",
-      "discounted": "512"
-    },
-    {
-      "id": "a588",
-      "title": "Xavier Ayers",
-      "original": "125",
-      "discounted": "732"
-    },
-    {
-      "id": "2f93",
-      "title": "Fidan",
-      "original": "57385",
-      "discounted": "2375"
-    },
-    {
-      "id": "a958",
-      "title": "Fidancik",
-      "original": "85937",
-      "discounted": "6389462"
-    }
   ],
   "add-to-cart": []
 }

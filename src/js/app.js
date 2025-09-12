@@ -45,7 +45,7 @@ const renderProductsHTML = (products) => {
   products.forEach((product) => {
     const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
                     <div id="productImg" class="relative z-10 top-56">
-                        <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
+                        <img src="${product?.image}"
                             alt="" class="w-[250px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
                         <div class="flex flex-row justify-between items-center ">
                             <div id="discount"

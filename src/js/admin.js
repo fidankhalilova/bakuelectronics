@@ -45,7 +45,7 @@ const renderProductsHTML = (products) => {
     products.forEach((product) => {
         const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
                     <div id="productImg" class="relative z-10 top-56">
-                        <img src="${product?.dropzoneFile ?? "No img"}"
+                        <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
                             alt="" class="w-[250px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
                         <div class="flex flex-row justify-between items-center ">
                             <div id="discount"
@@ -126,7 +126,7 @@ fetchProducts("products", (data) => {
     console.log(data);
 });
 
-function deleteItem(id, btn) {
+function deleteItem(id) {
     axios.delete(`${LOCAL_BASE}/products/${products?.id}`)
         .then(() => {
             const row = btn.parentNode.parentNode;
@@ -138,32 +138,142 @@ function deleteItem(id, btn) {
         });
 }
 
-const fileInput = document.getElementById("dropzone-file");
+const fileInput = document.getElementById("dropzoneFile");
 const preview = document.getElementById("preview");
 
-fileInput.addEventListener("change", function () {
-    const file = fileInput.files[0];
-    if (!file) return;
+// fileInput.addEventListener("click", function () {
+//     const file = fileInput.files[0];
+//     if (!file) return;
 
-    const reader = new FileReader();
+//     const reader = new FileReader();
 
-    reader.onload = function (event) {
-        const base64String = event.target.result;
-        console.log("Base64:", base64String);
+//     reader.onload = function (event) {
+//         const base64String = event.target.result;
+//         console.log("Base64:", base64String);
 
-        preview.src = base64String;
+//         preview.src = base64String;
 
-        fetch("http://localhost:3000/upload", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ image: base64String })
-        })
-            .then(res => res.json())
-            .then(data => console.log("Uploaded:", data))
-            .catch(err => console.error(err));
-    };
+//         fetch("http://localhost:3000/upload", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify({ image: base64String })
+//         })
+//             .then(res => res.json())
+//             .then(data => console.log("Uploaded:", data))
+//             .catch(err => console.error(err));
+//     };
 
-    reader.readAsDataURL(file);
-});
+//     reader.readAsDataURL(file);
+// });
+
+// const BASE_URL = "http://localhost:3000/products"; // JSON server products endpoint
+
+// const form = document.getElementById("products");
+// const tableBody = document.getElementById("productsDataSection-c");
+// const dropzoneFile = document.getElementById("dropzoneFile");
+
+// let editId = null; // if not null, we are editing
+
+// // -------- 0. Handle image upload (Base64) ----------
+// let uploadedImage = "";
+
+// dropzoneFile.addEventListener("change", () => {
+//     const file = dropzoneFile.files[0];
+//     const reader = new FileReader();
+//     reader.onloadend = () => {
+//         uploadedImage = reader.result; // Base64 string
+//     };
+//     if (file) reader.readAsDataURL(file);
+// });
+
+// // -------- 1. Handle form submit ----------
+// form.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+
+//     const newProduct = {
+//         title: document.getElementById("title").value,
+//         image: uploadedImage,
+//         original: document.getElementById("original").value,
+//         discounted: document.getElementById("discounted").value
+//     };
+
+//     try {
+//         if (editId) {
+//             // update existing product
+//             await axios.put(`${BASE_URL}/${editId}`, newProduct);
+//             editId = null;
+//         } else {
+//             // create new product
+//             await axios.post(BASE_URL, newProduct);
+//         }
+//         form.reset();
+//         uploadedImage = "";
+//         loadProducts();
+//     } catch (error) {
+//         console.error("Error saving product:", error);
+//     }
+// });
+
+// // -------- 2. Load products into table ----------
+// async function loadProducts() {
+//     try {
+//         const res = await axios.get(BASE_URL);
+//         const products = res.data;
+
+//         tableBody.innerHTML = "";
+//         products.forEach((product) => {
+//             const tr = document.createElement("tr");
+
+//             tr.innerHTML = `
+//         <td class="px-6 py-4 whitespace-nowrap">${product.title}</td>
+//         <td class="px-6 py-4 whitespace-nowrap">${product.original}</td>
+//         <td class="px-6 py-4 whitespace-nowrap">${product.discounted}</td>
+//         <td class="px-6 py-4 whitespace-nowrap">-</td>
+//         <td class="px-6 py-4 whitespace-nowrap flex gap-2">
+//           <button class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500" onclick="deleteItem(${product.id})">Delete</button>
+//           <button class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-500" onclick="editItem(${product.id})">Edit</button>
+//         </td>
+//       `;
+//             tableBody.appendChild(tr);
+//         });
+//     } catch (error) {
+//         console.error("Error loading products:", error);
+//     }
+// }
+
+// // -------- 3. Delete product ----------
+// async function deleteItem(id) {
+//     try {
+//         await axios.delete(`${BASE_URL}/${id}`);
+//         loadProducts();
+//     } catch (error) {
+//         console.error("Error deleting product:", error);
+//     }
+// }
+
+// // -------- 4. Edit product ----------
+// async function editItem(id) {
+//     try {
+//         const res = await axios.get(`${BASE_URL}/${id}`);
+//         const product = res.data;
+
+//         document.getElementById("title").value = product.title;
+//         document.getElementById("original").value = product.original;
+//         document.getElementById("discounted").value = product.discounted;
+//         uploadedImage = product.image; // keep existing image
+
+//         editId = product.id;
+//         window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to form
+//     } catch (error) {
+//         console.error("Error editing product:", error);
+//     }
+// }
+
+// // Initialize
+// loadProducts();
+
+// // expose functions to window so inline onclick works
+// window.deleteItem = deleteItem;
+// window.editItem = editItem;

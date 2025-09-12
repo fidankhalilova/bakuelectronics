@@ -43,72 +43,6 @@ function fetchProducts(url, cb) {
 let ProductFetchHTMLData = document.querySelector("#productsSection");
 let ProductCartFetchHTMLData = document.querySelector("#addToCart-c");
 
-const renderProductsHTML = (products) => {
-  products.forEach((product) => {
-    const productHtml = `<div id="product" class="relative flex flex-col items-center mt-[-160px]">
-                    <div id="productImg" class="relative z-10 top-56">
-                        <img src="https://new.bakuelectronics.az/_next/image?url=https%3A%2F%2Fimg.b-e.az%2Fmedia%2FinventImages%2Fapple-iphone-16-pro-128gb-natural-titanium-2.jpg&w=828&q=75"
-                            alt="" class="w-[250px] object-cover relative z-3 rounded-xl border border-[#e1e1e1]">
-                        <div class="flex flex-row justify-between items-center ">
-                            <div id="discount"
-                                class="bg-[#EA2427] px-2 py-2 text-[12px] font-medium text-white absolute z-4 top-2 left-2 rounded-lg">
-                                -90₼</div>
-                            <div id="share"
-                                class="bg-[#f5f5f5] absolute z-4 top-2 right-2 px-3 py-2 rounded-lg text-black font-meidum text-[14px]">
-                                <i class="ri-share-line"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="productContext"
-                        class="bg-[#f5f5f5] w-[300px] h-[460px] rounded-2xl flex flex-col items-center justify-start">
-                        <div class="relative mt-60 w-[250px] gap-3">
-                            <div id="productLikesComments" class="flex flex-row gap-3">
-                                <div id="likes" class="flex flex-row gap-1">
-                                    <i class="ri-star-fill text-[14px] text-[#EA2427]"></i>
-                                    <p class="text-[14px]">0</p>
-                                </div>
-                                <div id="comments" class="flex flex-row gap-1">
-                                    <i class="ri-chat-3-line text-[14px] text-[#EA2427]"></i>
-                                    <p class="text-[14px]">0 rəy</p>
-                                </div>
-                            </div>
-                            <div id="productName">
-                                <h3 class="text-[16px] mt-1">${product?.title ?? "No Name"
-      }</h3>
-                            </div>
-                            <div id="productPriceCredit" class="flex flex-row gap-2 mt-5">
-                                <div id="discountedPrice">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold line-through">${Math.round(product?.original * 100) /
-      100 ?? "None"
-      }₼</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round(product?.original * 100) /
-      100 ?? "None"
-      }₼</p>
-                                </div>
-                                <div id="creditPrice" class="ml-4 pl-6 border-l border-l-[#787a7d]">
-                                    <p class="text-[14px] text-[#787a7d] font-semibold">18 ay</p>
-                                    <p class="text-[18px] text-[#333] font-semibold">${Math.round(
-        (product?.discounted / 18) * 100
-      ) / 100 ?? "None"
-      }₼</p>
-                                </div>
-                            </div>
-                            <div id="addtocartButtons" class="flex flex-row justify-between mt-3">
-                                <div
-                                    class="text-[16px] px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5] w-[190px] flex items-center justify-center">
-                                    <i class="ri-shopping-basket-2-fill text-[18px] mr-2"></i> Səbətə
-                                    əlavə et
-                                </div>
-                                <i
-                                    class="ri-heart-line text-[20px] px-4 py-3 rounded-xl bg-[#dcdbdb] text-[#272727df] items-center duration-200 hover:cursor-pointer hover:bg-[#3c3c3cdf] hover:text-[#f5f5f5]"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-    ProductCartFetchHTMLData && (ProductFetchHTMLData.innerHTML += productHtml);
-  });
-};
-
 const renderCartProductsHTML = (products) => {
   products.forEach((product) => {
     const productCartHtml = `<tr>
@@ -140,7 +74,7 @@ fetchProducts("products", (data) => {
   renderProductsHTML(data);
   console.log(data);
 });
-fetchProducts("products", (data) => {
+fetchProducts("add-to-cart", (data) => {
   renderCartProductsHTML(data);
   console.log(data);
 });
@@ -206,4 +140,49 @@ const checkoutBtn = document.querySelector("#checkout-btn");
 checkoutBtn && checkoutBtn.addEventListener("click", () => {
   console.log("clicked");
   window.location.href = "./checkout.html";
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    if (document.getElementById("loader")) {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("content").classList.remove("hidden");
+    }
+  }, 3000);
+});
+
+const deleteBtn = document.querySelector("#deleteBtn");
+
+// DOM elements
+const productsContainer = document.getElementById("products");
+const cartContainer = document.getElementById("cart");
+
+
+// Add product to cart
+function addToCart(productId) {
+  // fetch the product info first
+  fetch(`${BASE_URL}/products/${productId}`)
+    .then(res => res.json())
+    .then(product => {
+      // send to cart
+      fetch(`${LOCAL_BASE}/add-to-cart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(product)
+      }).then(() => renderCartProductsHTML());
+    });
+}
+
+// Delete product from cart
+function deleteFromCart(cartId) {
+  fetch(`${LOCAL_BASE}/add-to-cart/${cartId}`, {
+    method: "DELETE"
+  }).then(() => renderCartProductsHTML());
+}
+
+const goBackHome = document.querySelector("#logo");
+
+goBackHome && goBackHome.addEventListener("click", () => {
+  console.log("Back to Home");
+  window.location.href = "./index.html"
 })
